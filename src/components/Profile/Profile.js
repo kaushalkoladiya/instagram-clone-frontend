@@ -22,7 +22,10 @@ import LocationIcon from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import EditIcon from '@material-ui/icons/Edit';
+import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
 
+// Components
+import EditUser from './EditUser';
 
 const styles = {
   button: {
@@ -47,7 +50,8 @@ const styles = {
     marginBottom: 20
   },
   paper: {
-    padding: 20
+    padding: 20,
+    marginBottom: 20,
   },
   profile: {
     '& .image-wrapper': {
@@ -105,8 +109,11 @@ class Profile extends Component {
   }
 
   handleEditImage = () => {
-    const fileInput = document.getElementById('image');
-    fileInput.click();
+    document.getElementById('image').click();
+  }
+
+  loagoutHandler = () => {
+    this.props.logout();
   }
 
   render() {
@@ -120,12 +127,11 @@ class Profile extends Component {
               <div className={classes.profile}>
                 <div className="image-wrapper">
                   <img src={imageUrl} alt="profile" className="profile-image" />
-                  <input name="image" id="image" type="file" hidden="hidden" />
+                  <input name="image" id="image" type="file" hidden="hidden" onChange={this.inputFileChangeHandler} />
                   <ToolTip title="Edit Profile Image" placement="top">
                     <IconButton onClick={this.handleEditImage} className="button">
                       <EditIcon color="primary" />
                     </IconButton>
-
                   </ToolTip>
                 </div>
                 <hr />
@@ -148,6 +154,12 @@ class Profile extends Component {
                   )}
                   <CalendarTodayIcon color="primary" />{' '}<span>Joined on <Moment format="YYYY, MMM" date={createdAt} /></span>
                 </div>
+                <ToolTip title="Logout" placement="top">
+                  <IconButton onClick={this.loagoutHandler}>
+                    <KeyboardReturn color="primary" />
+                  </IconButton>
+                </ToolTip>
+                <EditUser />
               </div>
             </Paper>
           ) : (
@@ -160,7 +172,7 @@ class Profile extends Component {
               </Paper>
             )
         ) : (
-            <CircularProgress variant="determinate" value={10} color="secondary" />
+            <CircularProgress style={{ textAlign: 'center', padding: "20px" }} variant="indeterminate" value={10} color="secondary" />
           )}
       </Fragment>
     );

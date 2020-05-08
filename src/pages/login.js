@@ -52,7 +52,7 @@ class Login extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  onSubmitHandler = async (event) => {
+  onSubmitHandler = (event) => {
     event.preventDefault();
 
     const userData = {

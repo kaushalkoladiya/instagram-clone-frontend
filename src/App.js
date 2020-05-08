@@ -16,29 +16,15 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import NavBar from './components/NavBar/Navbar';
 import AuthRouter from './util/AuthRouter';
 
+// Theme
+import themeObj from './util/Theme';
+
 // Pages
 import Home from './pages/home';
 import Login from './pages/login';
 import Signup from './pages/signup';
 
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      light: '#757ce8',
-      main: '#007CFF',
-      dark: '#002884',
-      contrastText: '#fff',
-    },
-    secondary: {
-      light: '#ff7961',
-      main: '#4fc3f7',
-      dark: '#ba000d',
-      contrastText: '#000',
-    }
-  },
-});
-
+const theme = createMuiTheme(themeObj);
 
 class App extends Component {
   componentDidMount() {

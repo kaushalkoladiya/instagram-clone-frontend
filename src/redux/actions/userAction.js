@@ -62,12 +62,19 @@ export const uploadImage = (formData) => (dispatch) => {
   dispatch({ type: LOADING_USER });
   axios.post('/user/profile/image', formData)
     .then(res => {
-      console.log(res.data);
       dispatch(getUserData());
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(err.response));
 }
 
+export const editUserDetails = (userData) => (dispatch) => {
+  dispatch({ type: LOADING_USER });
+  axios.post('/user/update', userData)
+    .then(() => {
+      dispatch(getUserData());
+    })
+    .catch(err => console.log(err.response));
+}
 
 const setAuthorizationHeader = token => {
   const bearerToken = `Bearer ${token}`;
