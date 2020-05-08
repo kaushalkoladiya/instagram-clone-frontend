@@ -46,8 +46,7 @@ class App extends Component {
     if (token) {
       const decodedToekn = jwt(token);
       if (decodedToekn.exp * 1000 > new Date()) {
-
-        axios.defaults.headers.comman['Authorization'] = token;
+        axios.defaults.headers.common['Authorization'] = token;
         store.dispatch({ type: SET_AUTHENTICATED });
         store.dispatch(getUserData());
       } else {
