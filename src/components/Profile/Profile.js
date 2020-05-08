@@ -5,6 +5,7 @@ import Moment from 'react-moment';
 
 // Redux
 import { connect } from 'react-redux';
+import { logout, uploadImage } from '../../redux/actions/userAction';
 
 // MUI
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -13,11 +14,14 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress'
+import IconButton from '@material-ui/core/IconButton';
+import ToolTip from '@material-ui/core/Tooltip';
 
 // Icons
 import LocationIcon from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import EditIcon from '@material-ui/icons/Edit';
 
 
 const styles = {
@@ -61,6 +65,7 @@ const styles = {
       objectFit: 'cover',
       maxWidth: '100%',
       borderRadius: '50%',
+      border: '1px solid #F5F5F5',
     },
     '& .profile-details': {
       textAlign: 'center',
@@ -90,12 +95,22 @@ const styles = {
 }
 
 class Profile extends Component {
+
+
+  inputFileChangeHandler = (event) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file, file.name);
+    this.props.uploadImage(formData);
+  }
+
+  handleEditImage = () => {
+    const fileInput = document.getElementById('image');
+    fileInput.click();
+  }
+
   render() {
     const { classes, user: { user: { imageUrl, username, bio, location, website, createdAt }, loading, isAuth } } = this.props;
-    // console.log(user);
-
-    // let profile = !loading ? (<p>profile...</p>) : (<p>loading...</p>);
-
 
     return (
       <Fragment>
@@ -105,6 +120,13 @@ class Profile extends Component {
               <div className={classes.profile}>
                 <div className="image-wrapper">
                   <img src={imageUrl} alt="profile" className="profile-image" />
+                  <input name="image" id="image" type="file" hidden="hidden" />
+                  <ToolTip title="Edit Profile Image" placement="top">
+                    <IconButton onClick={this.handleEditImage} className="button">
+                      <EditIcon color="primary" />
+                    </IconButton>
+
+                  </ToolTip>
                 </div>
                 <hr />
                 <div className="profile-details">
@@ -121,7 +143,7 @@ class Profile extends Component {
                   )}
                   {website && (
                     <Fragment>
-                      <LinkIcon color="primary" /> <a target="_blank" href={website} rel="noopner noreferrer">{website}</a><br />
+                      <LinkIcon color="primary" /> <a target="_blank" href={website} rel="noopener noreferrer">{website}</a><br />
                     </Fragment>
                   )}
                   <CalendarTodayIcon color="primary" />{' '}<span>Joined on <Moment format="YYYY, MMM" date={createdAt} /></span>
@@ -138,7 +160,7 @@ class Profile extends Component {
               </Paper>
             )
         ) : (
-          <CircularProgress variant="determinate" value={10} color="secondary" />
+            <CircularProgress variant="determinate" value={10} color="secondary" />
           )}
       </Fragment>
     );
@@ -149,10 +171,14 @@ class Profile extends Component {
 Profile.proptype = {
   user: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired,
+  uploadImage: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(Profile));
+const mapActionToProps = { logout, uploadImage };
+
+export default connect(mapStateToProps, mapActionToProps)(withStyles(styles)(Profile));
