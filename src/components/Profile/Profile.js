@@ -14,8 +14,6 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress'
-import IconButton from '@material-ui/core/IconButton';
-import ToolTip from '@material-ui/core/Tooltip';
 
 // Icons
 import LocationIcon from '@material-ui/icons/LocationOn';
@@ -26,6 +24,8 @@ import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
 
 // Components
 import EditUser from './EditUser';
+import TooltipButton from '../Button/Button';
+
 
 const styles = {
   button: {
@@ -128,11 +128,14 @@ class Profile extends Component {
                 <div className="image-wrapper">
                   <img src={imageUrl} alt="profile" className="profile-image" />
                   <input name="image" id="image" type="file" hidden="hidden" onChange={this.inputFileChangeHandler} />
-                  <ToolTip title="Edit Profile Image" placement="top">
-                    <IconButton onClick={this.handleEditImage} className="button">
-                      <EditIcon color="primary" />
-                    </IconButton>
-                  </ToolTip>
+                  <TooltipButton
+                    title="Edit Profile Image"
+                    placement="top"
+                    onClick={this.handleEditImage}
+                    btnClass="button"
+                  >
+                    <EditIcon color="primary" />
+                  </TooltipButton>
                 </div>
                 <hr />
                 <div className="profile-details">
@@ -154,11 +157,14 @@ class Profile extends Component {
                   )}
                   <CalendarTodayIcon color="primary" />{' '}<span>Joined on <Moment format="YYYY, MMM" date={createdAt} /></span>
                 </div>
-                <ToolTip title="Logout" placement="top">
-                  <IconButton onClick={this.loagoutHandler}>
-                    <KeyboardReturn color="primary" />
-                  </IconButton>
-                </ToolTip>
+
+                <TooltipButton
+                  title="Logout"
+                  placement="top"
+                  onClick={this.loagoutHandler}
+                >
+                  <KeyboardReturn color="primary" />
+                </TooltipButton>
                 <EditUser />
               </div>
             </Paper>

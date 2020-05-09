@@ -6,17 +6,17 @@ import { connect } from 'react-redux';
 
 // MUI
 import withStyle from '@material-ui/core/styles/withStyles';
-import ToolTip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import IconButton from '@material-ui/core/IconButton';
 
 // Icons
 import EditIcon from '@material-ui/icons/Edit';
+
+import TooltipButton from '../Button/Button';
 
 import { editUserDetails } from '../../redux/actions/userAction';
 
@@ -86,11 +86,14 @@ class EditUserDetail extends Component {
     const { classes } = this.props;
     return (
       <Fragment>
-        <ToolTip title="Edit Details" placement="right">
-          <IconButton onClick={this.openHandler} className={classes.button}>
-            <EditIcon color="primary" />
-          </IconButton>
-        </ToolTip>
+        <TooltipButton
+          title="Edit Details" 
+          placement="left"
+          onClick={this.openHandler}
+          btnClass={classes.button}
+        >
+          <EditIcon color="primary" />
+        </TooltipButton>
         <Dialog open={this.state.open} onClose={this.closeHandler} fullWidth maxWidth="xs" >
           <DialogTitle className={classes.center}>Edit Your Details</DialogTitle>
           <DialogContent>
