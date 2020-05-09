@@ -1,4 +1,17 @@
-import { SET_POSTS, UNLIKE_POST, LIKE_POST, LOADING_DATA, DELETE_POST, LOADING_UI, ADD_POST, SET_ERRORS, CLEAR_ERRORS } from '../types';
+import {
+  SET_POSTS,
+  UNLIKE_POST,
+  LIKE_POST,
+  LOADING_DATA,
+  DELETE_POST,
+  LOADING_UI,
+  ADD_POST,
+  SET_ERRORS,
+  CLEAR_ERRORS,
+  SET_POST,
+  STOP_LOADING_UI,
+  ADD_COMMENT
+} from '../types';
 import axios from 'axios';
 
 export const getPosts = () => (dispatch) => {
@@ -13,6 +26,24 @@ export const getPosts = () => (dispatch) => {
     .catch(err => {
       dispatch({
         type: SET_POSTS,
+        payload: []
+      })
+    });
+}
+
+export const getPost = (postId) => (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  axios.get(`/post/${postId}`)
+    .then(({ data: { post } }) => {
+      dispatch({
+        type: SET_POST,
+        payload: post
+      });
+      dispatch({ type: STOP_LOADING_UI });
+    })
+    .catch(err => {
+      dispatch({
+        type: SET_POST,
         payload: []
       })
     });
@@ -59,6 +90,25 @@ export const addPost = (postData) => (dispatch) => {
       dispatch({
         type: ADD_POST,
         payload: post
+      });
+      dispatch({ type: CLEAR_ERRORS });
+    })
+    .catch(({ response: { data: { error } } }) => {
+      console.log(error);
+      dispatch({
+        type: SET_ERRORS,
+        payload: error
+      })
+    });
+}
+
+export const addComment = (postId, commentData) => (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  axios.post(`/comment/${postId}/store`, commentData)
+    .then((res) => {
+      dispatch({
+        type: ADD_COMMENT,
+        payload: res.data
       });
       dispatch({ type: CLEAR_ERRORS });
     })

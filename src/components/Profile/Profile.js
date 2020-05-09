@@ -40,15 +40,6 @@ const styles = {
   progress: {
     position: 'absolute'
   },
-  invisibleSeparator: {
-    border: 'none',
-    margin: 4
-  },
-  visibleSeparator: {
-    width: '100%',
-    borderBottom: '1px solid rgba(0,0,0,0.1)',
-    marginBottom: 20
-  },
   paper: {
     padding: 20,
     marginBottom: 20,
@@ -95,6 +86,10 @@ const styles = {
     '& a': {
       margin: '20px 10px'
     }
+  },
+  spinner: {
+    margin: '50px auto 50px auto',
+    textAlign: 'center',
   }
 }
 
@@ -178,7 +173,9 @@ class Profile extends Component {
               </Paper>
             )
         ) : (
-            <CircularProgress style={{ textAlign: 'center', padding: "20px" }} variant="indeterminate" value={10} color="secondary" />
+            <div className={classes.spinner}>
+              <CircularProgress variant="indeterminate" value={10} color="secondary" />
+            </div>
           )}
       </Fragment>
     );

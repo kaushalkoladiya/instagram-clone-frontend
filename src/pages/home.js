@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 
 // MUI
 import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Redux
 import { connect } from 'react-redux';
+import { getPosts } from '../redux/actions/dataAction';
 
+// Components
 import Post from '../components/Post/Post';
 import Profile from '../components/Profile/Profile';
-
-import { getPosts } from '../redux/actions/dataAction';
 
 import style from './style.module.css';
 
@@ -31,7 +32,9 @@ class Home extends Component {
           {posts.length !== 0 && !loading ? (
             posts.map((post, index) => <Post post={post} key={index} />)
           ) : (
-              <h3>Loading...</h3>
+              <div style={{ margin: '50px auto 50px auto', textAlign: 'center' }}>
+                <CircularProgress value={10} variant="indeterminate" color="secondary" />
+              </div>
             )}
         </Grid>
       </Grid>
