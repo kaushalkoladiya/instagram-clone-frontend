@@ -21,11 +21,13 @@ import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 
 // Components
 import TooltipButton from '../Button/Button';
+import DeletePost from './DeletePost';
 
 const styles = {
   card: {
     display: 'flex',
-    marginBottom: 20
+    marginBottom: 20,
+    position: 'relative',
   },
   content: {
     padding: 25,
@@ -46,10 +48,8 @@ const post = ({ classes,
     const like = user.likes.find(like => like.postId === postId);
     // console.log(like, 'data');
     if (user.likes && like) {
-      console.log('true');
       return true;
     } else {
-      console.log('false');
       return false;
     }
   }
@@ -88,11 +88,16 @@ const post = ({ classes,
         )
     );
 
+  const deleteButton = user.isAuth && username === user.user.username ? (
+    <DeletePost postId={postId} />
+  ) : null;
+
   return (
     <Card className={classes.card}>
       <CardMedia image={imageUrl} title="Profile Image" className={classes.image} />
       <CardContent className={classes.content}>
         <Typography variant="h5" color="secondary" component={Link} to={`/user/${username}`}>{username}</Typography> <br />
+        {deleteButton}
         <Typography variant="overline"><Moment format="YYYY, MMM DD" date={createdAt} /></Typography>
         <Typography variant="body1">{body}</Typography>
         {likeButton}<span>{likeCount} Likes</span>
