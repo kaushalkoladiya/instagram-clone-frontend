@@ -91,6 +91,7 @@ class AddPost extends Component {
     formData.append('body', this.state.body);
     this.props.addPost(formData);
   }
+  
   inputFileChangeHandler = (event) => {
     this.setState({ image: event.target.files[0] });
   }

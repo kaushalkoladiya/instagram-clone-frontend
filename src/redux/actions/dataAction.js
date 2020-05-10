@@ -74,7 +74,6 @@ export const unlikePost = (postId) => (dispatch) => {
 export const deletePost = (postId) => (dispatch) => {
   axios.delete(`/post/${postId}`)
     .then((res) => {
-      console.log(res);
       dispatch({
         type: DELETE_POST,
         payload: postId

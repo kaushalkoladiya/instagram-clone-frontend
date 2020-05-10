@@ -61,7 +61,7 @@ export default function (state = initialState, action) {
         post: {
           ...state.post,
           comments: [
-            action.payload,
+            action.payload.comment,
             ...state.post.comments
           ],
         }

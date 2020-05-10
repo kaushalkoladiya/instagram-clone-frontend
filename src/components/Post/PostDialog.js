@@ -28,6 +28,7 @@ import ChatIcon from '@material-ui/icons/Chat';
 import TooltipButton from '../Button/Button';
 import LikeButton from '../Button/LikeButton';
 import Comments from '../Comment/Comment';
+import AddComment from '../Comment/AddComment';
 
 const styles = {
   closeButton: {
@@ -107,6 +108,7 @@ class PostDialog extends Component {
                       <ChatIcon color="primary" />
                     </TooltipButton><span>{commentCount} Comments</span>
                   </CardActions>
+                  <AddComment postId={postId} />
                   <Comments comments={comments} />
                 </DialogContent>
               </Fragment>
