@@ -18,7 +18,7 @@ import StaticProfile from '../components/Profile/StaticProfile'
 
 const styles = {
   postsContainer: {
-    padding: " 0 1rem!important"
+    margin: " 0 1rem!important"
   }
 }
 
@@ -27,10 +27,15 @@ class User extends Component {
   state = {
     profile: null,
     error: null,
+    postId: null
   }
 
   componentDidMount() {
     const username = this.props.match.params.username;
+    const postId = this.props.match.params.postId;
+
+    if (postId) this.setState({ postId: postId });
+
     this.props.getUser(username);
     axios.get(`/user/${username}`)
       .then((res) => {
@@ -48,7 +53,7 @@ class User extends Component {
     console.log();
     return (
       <Grid container>
-        <Grid item sm={4} xs={12}>
+        <Grid item sm={4} xs={12} style={{ padding: 10 }}>
           {this.state.profile !== null ? (
             <StaticProfile profile={this.state.profile} />
           ) : this.state.error ? (
@@ -66,9 +71,18 @@ class User extends Component {
             </div>
           ) : posts === null ? (
             <h1>No Posts Found</h1>
+          ) : !this.state.postId ? (
+            posts.map((post, index) => <Post post={post} key={index} />)
           ) : (
-                posts.map((post, index) => <Post post={post} key={index} />)
-              )}
+                  posts.map((post, index) => {
+                    if (post.postId !== this.state.postId)
+                      return <Post post={post} key={index} />
+                    else{
+                      console.log('here');
+                      return <Post post={post} key={index} openDialog />
+                    }
+                  })
+                )}
 
 
         </Grid>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import PropTypes from 'prop-types';
@@ -43,52 +43,61 @@ const styles = {
   },
 }
 
-const post = ({ classes,
-  post: { postId, imageUrl, image, username, body, createdAt, likeCount, commentCount },
-  user }) => {
+class Post extends Component {
+  render() {
+    const {
+      classes,
+      post: { postId, imageUrl, image, username, body, createdAt, likeCount, commentCount },
+      user
+    } = this.props;
 
-  const deleteButton = user.isAuth && username === user.user.username ? (
-    <DeletePost postId={postId} />
-  ) : null;
+    console.log(this.props.openDialog);
 
-  return (
-    <Card className={classes.card}>
-      <CardHeader
-        avatar={<Avatar alt="Profile" src={imageUrl} />}
-        action={deleteButton}
-        title={
-          <Typography color="primary" component={Link} to={`/user/${username}`}>{username}</Typography>
-        }
-        subheader={<Moment format="MMM DD, YYYY" date={createdAt} />}
-      />
-      <CardMedia
-        className={classes.media}
-        image={image}
-        title="image"
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary">{body}</Typography>
-        {deleteButton}
-      </CardContent>
-      <CardActions disableSpacing>
-        <LikeButton postId={postId} /><span>{likeCount} Likes</span>
-        <TooltipButton title="Comment" placement="top" >
-          <ChatIcon color="primary" />
-        </TooltipButton><span>{commentCount} Comments</span>
-        <PostDialog username={username} postId={postId} />
-      </CardActions>
-    </Card>
-  );
+    const deleteButton = user.isAuth && username === user.user.username ? (
+      <DeletePost postId={postId} />
+    ) : null;
+
+    return (
+      <Card className={classes.card}>
+        <CardHeader
+          avatar={<Avatar alt="Profile" src={imageUrl} />}
+          action={deleteButton}
+          title={
+            <Typography color="primary" component={Link} to={`/user/${username}`}>{username}</Typography>
+          }
+          subheader={<Moment format="MMM DD, YYYY" date={createdAt} />}
+        />
+        <CardMedia
+          className={classes.media}
+          image={image}
+          title="image"
+        />
+        <CardContent>
+          <Typography variant="body2" color="textSecondary">{body}</Typography>
+          {deleteButton}
+        </CardContent>
+        <CardActions disableSpacing>
+          <LikeButton postId={postId} /><span>{likeCount} Likes</span>
+          <TooltipButton title="Comment" placement="top" >
+            <ChatIcon color="primary" />
+          </TooltipButton><span>{commentCount} Comments</span>
+          <PostDialog username={username} postId={postId} openDialog={this.props.openDialog} />
+        </CardActions>
+      </Card>
+    );
+  }
+
 }
 
-post.propTypes = {
+Post.propTypes = {
   user: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
+  openDialog: PropTypes.bool
 }
 
 const mapToStateProps = state => ({
   user: state.user
 })
 
-export default connect(mapToStateProps)(withStyle(styles)(post));
+export default connect(mapToStateProps)(withStyle(styles)(Post));

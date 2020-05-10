@@ -1,4 +1,4 @@
-import { SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED, LOADING_USER, LIKE_POST, UNLIKE_POST } from '../types';
+import { SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED, LOADING_USER, LIKE_POST, UNLIKE_POST, MARK_AS_READ } from '../types';
 
 
 const initialState = {
@@ -49,6 +49,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         likes: state.likes.filter(like => like.postId !== action.payload.post.postId)
+      }
+
+    case MARK_AS_READ:
+      state.notifications.forEach(noti => noti.read = true);
+      return {
+        ...state
       }
 
     default:

@@ -151,9 +151,6 @@ class AddPost extends Component {
               </Button>
             </form>
           </DialogContent>
-          {/* <DialogActions>
-            <Button onClick={this.closeHandler} color="secondary" >Close</Button>
-          </DialogActions> */}
         </Dialog>
       </Fragment>
     )

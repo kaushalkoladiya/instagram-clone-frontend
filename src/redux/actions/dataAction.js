@@ -128,7 +128,6 @@ export const getUser = (username) => (dispatch) => {
         type: SET_POSTS,
         payload: userData.posts
       });
-      dispatch({ type: STOP_LOADING_UI });
     })
     .catch(err => {
       dispatch({

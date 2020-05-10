@@ -54,14 +54,34 @@ class PostDialog extends Component {
 
   state = {
     open: false,
+    oldPath: null,
+    newPath: null
+  }
+
+  componentDidMount() {
+    if (this.props.openDialog){
+      this.openHandler();
+      console.log(this.props.openDialog);
+    }
   }
 
   openHandler = () => {
-    this.setState({ open: true });
+    let oldPath = window.location.pathname;
+
+    const { username, postId } = this.props;
+    const newPath = `/user/${username}/post/${postId}`;
+
+    if (oldPath === newPath)
+      oldPath = `/user/${username}`;
+
+    window.history.pushState(null, null, newPath);
+
+    this.setState({ open: true, oldPath, newPath });
     this.props.getPost(this.props.postId);
   }
 
   closeHandler = () => {
+    window.history.pushState(null, null, this.state.oldPath);
     this.setState({ open: false });
   }
 
@@ -125,6 +145,7 @@ PostDialog.propTypes = {
   UI: PropTypes.object.isRequired,
   postId: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
+  post: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({

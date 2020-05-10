@@ -13,10 +13,10 @@ import Button from '@material-ui/core/Button';
 // Components
 import TooltipButton from '../Button/Button';
 import AddPost from '../Post/AddPost';
+import Notifications from '../Notification/Notification';
 
 // Icons
 import HomeIcon from '@material-ui/icons/Home';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 
 import style from './NavBar.module.css';
 
@@ -34,9 +34,9 @@ class NavBar extends Component {
                 </TooltipButton>
               </Link>
               <AddPost />
-              <TooltipButton title="Notifications">
-                <NotificationsIcon color="primary" />
-              </TooltipButton>
+
+              <Notifications />
+
             </Fragment>
           ) : (
               <Fragment>
