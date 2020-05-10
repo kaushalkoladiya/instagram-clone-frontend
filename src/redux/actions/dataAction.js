@@ -119,3 +119,21 @@ export const addComment = (postId, commentData) => (dispatch) => {
       })
     });
 }
+
+export const getUser = (username) => (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  axios.get(`/user/${username}`)
+    .then(({ data: { userData } }) => {
+      dispatch({
+        type: SET_POSTS,
+        payload: userData.posts
+      });
+      dispatch({ type: STOP_LOADING_UI });
+    })
+    .catch(err => {
+      dispatch({
+        type: SET_POSTS,
+        payload: null
+      })
+    });
+}
