@@ -16,12 +16,6 @@ import Post from '../components/Post/Post';
 import StaticProfile from '../components/Profile/StaticProfile'
 
 
-const styles = {
-  postsContainer: {
-    margin: " 0 1rem!important"
-  }
-}
-
 class User extends Component {
 
   state = {
@@ -33,7 +27,6 @@ class User extends Component {
   componentDidMount() {
     const username = this.props.match.params.username;
     const postId = this.props.match.params.postId;
-
     if (postId) this.setState({ postId: postId });
 
     this.props.getUser(username);
@@ -49,8 +42,6 @@ class User extends Component {
 
   render() {
     const { posts, loading } = this.props.data;
-
-    console.log();
     return (
       <Grid container>
         <Grid item sm={4} xs={12} style={{ padding: 10 }}>
@@ -64,7 +55,7 @@ class User extends Component {
                 </div>
               )}
         </Grid>
-        <Grid item sm={8} xs={12} className={styles.postsContainer}>
+        <Grid item sm={8} xs={12}>
           {loading ? (
             <div style={{ margin: '50px auto 50px auto', textAlign: 'center' }}>
               <CircularProgress value={10} variant="indeterminate" color="secondary" />
@@ -77,8 +68,7 @@ class User extends Component {
                   posts.map((post, index) => {
                     if (post.postId !== this.state.postId)
                       return <Post post={post} key={index} />
-                    else{
-                      console.log('here');
+                    else {
                       return <Post post={post} key={index} openDialog />
                     }
                   })

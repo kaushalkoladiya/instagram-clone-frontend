@@ -27,6 +27,7 @@ import User from './pages/user';
 
 const theme = createMuiTheme(themeObj);
 
+axios.defaults.baseURL = "https://asia-east2-social-12ee2.cloudfunctions.net/api";
 class App extends Component {
   componentDidMount() {
     const token = localStorage.getItem('token');

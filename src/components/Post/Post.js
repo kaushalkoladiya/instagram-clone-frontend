@@ -51,8 +51,6 @@ class Post extends Component {
       user
     } = this.props;
 
-    console.log(this.props.openDialog);
-
     const deleteButton = user.isAuth && username === user.user.username ? (
       <DeletePost postId={postId} />
     ) : null;

@@ -59,10 +59,8 @@ class PostDialog extends Component {
   }
 
   componentDidMount() {
-    if (this.props.openDialog){
+    if (this.props.openDialog)
       this.openHandler();
-      console.log(this.props.openDialog);
-    }
   }
 
   openHandler = () => {
