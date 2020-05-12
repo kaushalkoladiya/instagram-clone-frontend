@@ -38,8 +38,8 @@ const styles = {
   },
   closeButton: {
     position: 'absolute',
-    left: '90%',
-    top: '5%'
+    right: '10px',
+    top: '5px'
   }
 };
 
